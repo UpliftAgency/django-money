@@ -20,7 +20,7 @@ from ..settings import CURRENCY_CHOICES, DECIMAL_PLACES, DEFAULT_CURRENCY
 from ..utils import MONEY_CLASSES, get_currency_field_name, prepare_expression
 
 
-__all__ = ("MoneyField",)
+__all__ = ("CurrencyField", "LinkedCurrencyMoneyField", "MoneyField")
 
 
 class MoneyValidator(DecimalValidator):

@@ -25,3 +25,6 @@ class MoneyField(Scalar):
     def parse_value(value):
         amount, currency = value.split(" ")
         return Money(amount=float(amount), currency=currency)
+
+
+__all__ = ('MoneyField',)
