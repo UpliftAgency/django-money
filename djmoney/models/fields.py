@@ -9,6 +9,7 @@ from django.db import models
 from django.db.models import F, Field, Func, Value
 from django.db.models.expressions import BaseExpression
 from django.db.models.signals import class_prepared
+from django.forms import DecimalField
 from django.utils.functional import cached_property
 
 from djmoney import forms
@@ -386,6 +387,10 @@ class LinkedCurrencyMoneyField(MoneyField):
 
         super().contribute_to_class(cls, name)
         setattr(cls, self.name, LinkedCurrencyMoneyFieldProxy(self, self._currency_field_name))
+
+    def formfield(self, **kwargs):
+        defaults = {"form_class": DecimalField}
+        return super(MoneyField, self).formfield(**defaults)
 
 
 def patch_managers(sender, **kwargs):
