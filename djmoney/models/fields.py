@@ -348,7 +348,8 @@ def noop_add_currency_field(*args, **kwargs):
 
 class LinkedCurrencyMoneyWidget(NumberInput):
     def render(self, *args, **kwargs):
-        kwargs["value"] = str(kwargs["value"].amount)
+        if isinstance(kwargs.get("value"), Money):
+            kwargs["value"] = str(kwargs["value"].amount)
         return super().render(*args, **kwargs)
 
 
@@ -383,6 +384,7 @@ class LinkedCurrencyMoneyField(MoneyField):
             **kwargs,
         )
         self._currency_field_name = currency_field_name
+        self._step = 1.0 / (10 ^ decimal_places) if decimal_places else 1
 
     def contribute_to_class(self, cls, name):
         # This nonsense is necessary to prevent django from automatically adding
@@ -395,7 +397,7 @@ class LinkedCurrencyMoneyField(MoneyField):
         setattr(cls, self.name, LinkedCurrencyMoneyFieldProxy(self, self._currency_field_name))
 
     def formfield(self, **kwargs):
-        defaults = {"form_class": DecimalField, "widget": LinkedCurrencyMoneyWidget(attrs={'step': 0.01})}
+        defaults = {"form_class": DecimalField, "widget": LinkedCurrencyMoneyWidget(attrs={'step': self._step})}
         return super(MoneyField, self).formfield(**defaults)
 
 
