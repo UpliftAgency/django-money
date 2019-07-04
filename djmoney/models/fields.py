@@ -9,7 +9,7 @@ from django.db import models
 from django.db.models import F, Field, Func, Value
 from django.db.models.expressions import BaseExpression
 from django.db.models.signals import class_prepared
-from django.forms import DecimalField
+from django.forms import DecimalField, NumberInput
 from django.utils.functional import cached_property
 
 from djmoney import forms
@@ -346,6 +346,12 @@ def noop_add_currency_field(*args, **kwargs):
     pass
 
 
+class LinkedCurrencyMoneyWidget(NumberInput):
+    def render(self, *args, **kwargs):
+        kwargs["value"] = str(kwargs["value"].amount)
+        return super().render(*args, **kwargs)
+
+
 class LinkedCurrencyMoneyField(MoneyField):
     """
     Customized MoneyField to not automatically add a currency field to the
@@ -389,7 +395,7 @@ class LinkedCurrencyMoneyField(MoneyField):
         setattr(cls, self.name, LinkedCurrencyMoneyFieldProxy(self, self._currency_field_name))
 
     def formfield(self, **kwargs):
-        defaults = {"form_class": DecimalField}
+        defaults = {"form_class": DecimalField, "widget": LinkedCurrencyMoneyWidget(attrs={'step': 0.01})}
         return super(MoneyField, self).formfield(**defaults)
 
 
