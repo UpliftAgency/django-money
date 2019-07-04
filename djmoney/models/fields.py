@@ -384,7 +384,7 @@ class LinkedCurrencyMoneyField(MoneyField):
             **kwargs,
         )
         self._currency_field_name = currency_field_name
-        self._step = 1.0 / (10 ^ decimal_places) if decimal_places else 1
+        self._step = 1.0 / (10 ** decimal_places) if decimal_places else 1
 
     def contribute_to_class(self, cls, name):
         # This nonsense is necessary to prevent django from automatically adding
