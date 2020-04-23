@@ -6,7 +6,7 @@ from django.core.serializers.json import Serializer as JSONSerializer
 
 from djmoney.money import Money
 
-from .models.fields import MoneyField, LinkedCurrencyMoneyField
+from .models.fields import LinkedCurrencyMoneyField, MoneyField
 from .utils import get_currency_field_name
 
 
@@ -46,7 +46,7 @@ def Deserializer(stream_or_string, **options):  # noqa
                 field = Model._meta.get_field(field_name)
                 if isinstance(field, LinkedCurrencyMoneyField) and field_value is not None:
                     currency_field_name = get_currency_field_name(field_name, field=field)
-                    money_fields[field_name] = Money(field_value, get_currency_from_obj(Model, obj, currency_field_name))
+                    money_fields[field_name] = Money(field_value, get_currency_from_obj(Model, obj, currency_field_name))  # noqa
                 elif isinstance(field, MoneyField) and field_value is not None:
                     money_fields[field_name] = Money(field_value, obj["fields"][get_currency_field_name(field_name)])
                 else:
@@ -68,9 +68,10 @@ def get_currency_from_obj(Model, obj, currency_field_name):
         data = obj["fields"]
         RelatedModel = None
         *related_attrs, currency_attr = currency_field_name.split("__")
+        foreign_key_id = None
         for related_attr in related_attrs:
             if RelatedModel:
-                data = RelatedModel.objects.values_list(f"{related_attr}_id", flat=True).get(pk=foreign_key_id)
+                data = RelatedModel.objects.values_list("{0}_id".format(related_attr), flat=True).get(pk=foreign_key_id)
                 foreign_key_id = data
             else:
                 foreign_key_id = data[related_attr]

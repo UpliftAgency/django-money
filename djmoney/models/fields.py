@@ -368,7 +368,7 @@ class LinkedCurrencyMoneyField(MoneyField):
         default=None,
         default_currency=DEFAULT_CURRENCY,
         currency_choices=CURRENCY_CHOICES,
-        **kwargs,
+        **kwargs
     ):
         self._currency_field = currency_field
         super().__init__(
@@ -379,7 +379,7 @@ class LinkedCurrencyMoneyField(MoneyField):
             default=default,
             default_currency=default_currency,
             currency_choices=currency_choices,
-            **kwargs,
+            **kwargs
         )
         self._currency_field_name = currency_field_name
         self._step = 1.0 / (10 ** decimal_places) if decimal_places else 1

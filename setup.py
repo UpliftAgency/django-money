@@ -31,6 +31,9 @@ test_requirements = [
     'pytest-pythonpath',
     'pytest-cov',
     'django-reversion',
+    'graphene<3',
+    'graphene-django<2.8',
+    'certifi',
 ]
 
 extras_requirements = {

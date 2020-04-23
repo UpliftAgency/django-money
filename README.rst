@@ -1,8 +1,8 @@
 django-money
 ============
 
-.. image:: https://travis-ci.org/django-money/django-money.svg?branch=master
-   :target: https://travis-ci.org/django-money/django-money
+.. image:: https://travis-ci.org/UpliftAgency/django-money.svg?branch=master
+   :target: https://travis-ci.org/UpliftAgency/django-money
    :alt: Build Status
 
 .. image:: http://codecov.io/github/django-money/django-money/coverage.svg?branch=master
@@ -19,6 +19,13 @@ django-money
 
 A little Django app that uses ``py-moneyed`` to add support for Money
 fields in your models and forms.
+
+**NOTE:** This fork has additional support for:
+
+* `LinkedCurrencyMoneyField`, a field that infers currency from a related model
+* `graphene-django` with support for `MoneyField` and `MoneyFieldInput`. See `djmoney.graphql` for details.
+
+Original documentation follows:
 
 * Django versions supported: 1.11, 2.1, 2.2, 3.0
 * Python versions supported: 3.5, 3.6, 3.7

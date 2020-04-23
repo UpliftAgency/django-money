@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "djmoney",
     "djmoney.contrib.exchange",
+    "graphene_django",
     "reversion",
     "tests.testapp",
 ]
@@ -55,3 +56,10 @@ moneyed.add_currency("USDT", "000", "Tether", None)
 
 OPEN_EXCHANGE_RATES_APP_ID = "test"
 FIXER_ACCESS_KEY = "test"
+
+GRAPHENE = {
+    'SCHEMA': 'tests.testapp.graphql.schema'
+}
+# FIXME: Graphene test fails without this.
+# AttributeError: 'Settings' object has no attribute 'ROOT_URLCONF'
+ROOT_URLCONF = 'tests.testapp.urls'
