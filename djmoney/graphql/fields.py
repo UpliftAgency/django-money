@@ -91,14 +91,6 @@ class MoneyField(ObjectType):
     def resolve_amount_str(self, info, **kwargs):
         return self.amount
 
-    amount_int = graphene.Int(
-        description="The rounded version of the numerical amount.",
-        required=True,
-    )
-
-    def resolve_amount_int(self, info, **kwargs):
-        return int(self.amount)
-
     currency = graphene.Field(CurrencyField, required=True)
 
     def resolve_currency(self, info, **kwargs):

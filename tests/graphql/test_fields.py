@@ -20,7 +20,6 @@ fragment moneyFieldInfo on MoneyField {
         prefix
         suffix
     }
-    amountInt
     amountWith1Digit: formatAmount(decimals: 1)
 }
 """
@@ -62,7 +61,6 @@ class FieldsTestCase(GraphQLTestCase):
             "money": {
                 "asString": "100.00 USD",
                 "amount": 100.0,
-                "amountInt": 100,
                 "amountWith1Digit": "100.0",
                 "amountStr": "100.00",
                 "currency": {
@@ -77,7 +75,6 @@ class FieldsTestCase(GraphQLTestCase):
             "secondMoney": {
                 "asString": "123.32 EUR",
                 "amount": 123.32,
-                "amountInt": 123,
                 "amountStr": "123.32",
                 "amountWith1Digit": "123.3",
                 "currency": {
@@ -119,7 +116,6 @@ class FieldsTestCase(GraphQLTestCase):
         assert obj_updated["money"] == {
             "asString": "456.78 GBP",
             "amount": 456.78,
-            "amountInt": 456,
             "amountWith1Digit": "456.8",
             "amountStr": "456.78",
             "currency": {
